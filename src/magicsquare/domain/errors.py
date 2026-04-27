@@ -1,0 +1,2 @@
+class NoMagicSolutionError(Exception):
+    pass
