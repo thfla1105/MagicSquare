@@ -24,5 +24,16 @@ def tq_nosol_grid() -> list[list[int]]:
 
 
 @pytest.fixture
+def tq_first_attempt_ok_grid() -> list[list[int]]:
+    """Valid 4×4 with two zeros; FR-05 placement1 (low→first empty, high→second) already yields magic sum 34."""
+    return [
+        [16, 0, 2, 0],
+        [5, 10, 11, 8],
+        [9, 6, 7, 12],
+        [4, 15, 14, 1],
+    ]
+
+
+@pytest.fixture
 def deep_copy():
     return copy.deepcopy
