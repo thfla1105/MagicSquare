@@ -2,6 +2,8 @@
 
 부분적으로 비어 있는 **4×4** 격자(빈칸은 `0`)에서 **빈칸 두 곳**에 수를 넣어 **고전 마방진**(행·열·두 대각선 10개 선의 합이 모두 **34**)을 완성할 수 있는지 판단하는 **Python** 프로젝트입니다. 요구사항·테스트 기준은 **[제품 요구사항(PRD)](docs/5.PRD_MagicSquare_4x4_TDD.md)** 에 단일화되어 있습니다.
 
+**작업 이력·인덱스**: 통합 보고 [`report/10.Cumulative_Work_Summary_2026-04-28.md`](report/10.Cumulative_Work_Summary_2026-04-28.md), 프롬프트 타임라인 [`prompting/004_cumulative_session_chronology.md`](prompting/004_cumulative_session_chronology.md).
+
 ## Dual-Track TDD
 
 - **Boundary(API 계약)**: 입력 검증(FR-01), 정해진 `code`/`message`(§5), 검증 **우선순위**. 무효 입력에서는 Domain을 호출하지 않습니다.
@@ -18,10 +20,12 @@
 | `src/magicsquare/boundary` | 입력 검증·오류 계약 |
 | `src/magicsquare/domain` | 해 탐색·판정 로직 |
 | `src/magicsquare/control` | 유스케이스 조합 |
+| `src/magicsquare/entity` | 격자 등 공유 타입 |
 | `src/magicsquare/gui` | **tkinter** 데스크톱 데모 (격자 입력·풀이) |
 | `tests/boundary`, `tests/domain`, `tests/e2e` | 이중 트랙 + 통합 시나리오 |
-| `docs/` | PRD, 구현 체크리스트 |
-| `report/` | 진행·제안 문서(상세 규칙은 PRD 우선) |
+| `docs/` | PRD, 체크리스트, 테스트 명세 등 |
+| `report/` | 진행 보고·실행 가이드(`report/9`)·[누적 요약 `report/10`](report/10.Cumulative_Work_Summary_2026-04-28.md) |
+| `prompting/` | 사용자 요청 로그 — **[`004` 타임라인](prompting/004_cumulative_session_chronology.md)** 권장 |
 
 ## 요구 사항
 
@@ -78,7 +82,7 @@ pip install -e ".[dev]"
 python -m pytest tests
 ```
 
-간단한 요약만 보려면 `python -m pytest tests -q`  
+간단한 요약만 보려면 `python -m pytest tests -q` — 현재 저장소 기준 **24**개.  
 (프로젝트에 `pytest` 가 들어 있으면 `pytest` 단독 명령도 동일하게 동작한다.)
 
 ## GUI (tkinter)
@@ -99,12 +103,18 @@ python -m magicsquare.gui.tk_app
 - **예시(해 있음/없음)**: E2E·`conftest` 와 동일한 격자를 불러온다.
 - **Windows**: Python 설치 시 **tcl/tk** 포함 여부를 확인한다. (공식 python.org 설치본은 보통 포함.)
 
-## 문서
+## 문서 · 보고 · Prompting
 
 | 문서 | 내용 |
 |------|------|
-| [docs/5.PRD_MagicSquare_4x4_TDD.md](docs/5.PRD_MagicSquare_4x4_TDD.md) | FR, 오류 계약, API, NFR, Dual-Track 전략, MLOps 역할(§7.5) |
-| [docs/6.TODO_MagicSquare_4x4_Checklist.md](docs/6.TODO_MagicSquare_4x4_Checklist.md) | 구현·테스트 **체크리스트** (PRD 추적용) |
+| [docs/5.PRD_MagicSquare_4x4_TDD.md](docs/5.PRD_MagicSquare_4x4_TDD.md) | FR, 오류 계약, API, NFR, Dual-Track, MLOps(§7.5), **§2.4 로컬 GUI** |
+| [docs/6.TODO_MagicSquare_4x4_Checklist.md](docs/6.TODO_MagicSquare_4x4_Checklist.md) | 구현·테스트 **체크리스트** (PRD 추적) |
+| [docs/7.Test_Case_Specification_MagicSquare_4x4.md](docs/7.Test_Case_Specification_MagicSquare_4x4.md) | 테스트 조건·전제·성공/실패·특별 절차 |
+| [report/9.Test_Case_Specification_Report_2026-04-28.md](report/9.Test_Case_Specification_Report_2026-04-28.md) | **venv·pytest·24 케이스** 실행 가이드 |
+| [report/10.Cumulative_Work_Summary_2026-04-28.md](report/10.Cumulative_Work_Summary_2026-04-28.md) | **누적 산출·실행 요약** (보고서 허브) |
+| [report/8.Session_Report_Documentation_DualTrack_2026-04-28.md](report/8.Session_Report_Documentation_DualTrack_2026-04-28.md) | Dual Track·MLOps 문서 세션 |
+| [prompting/004_cumulative_session_chronology.md](prompting/004_cumulative_session_chronology.md) | **프롬프트 전체 타임라인** |
+| [prompting/README.md](prompting/README.md) | Prompting 폴더 인덱스 (`001`~`004`) |
 
 ## TO-DO 리스트 (실행 순서)
 

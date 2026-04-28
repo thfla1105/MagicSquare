@@ -1,6 +1,6 @@
 # Prompt 004 — 누적 세션 타임라인 (Chronology)
 
-**범위**: MagicSquare 4×4 — Dual Track·PRD·문서·테스트 명세·venv·GitHub까지 이어진 사용자 요청 정리  
+**범위**: MagicSquare 4×4 — Dual Track·PRD·문서·테스트·venv·Git·**GREEN**·**tkinter GUI**까지 이어진 사용자 요청 정리  
 **관련**: `001`~`003`은 구간별 상세; 본 파일은 **전체 흐름**만 연결한다.
 
 **관련 통합 보고**: [`report/10.Cumulative_Work_Summary_2026-04-28.md`](../report/10.Cumulative_Work_Summary_2026-04-28.md).
@@ -18,11 +18,18 @@
 7. 지금까지 **Prompting → `prompting/`**, **보고서 → `report/`** 에 정리.
 8. GitHub **`MagicSquare_14`** 에 작업 **전부 푸시**.
 9. **`red` 브랜치** 생성.
-10. 첨부 **테스트 양식**(테스트 조건·전제·성공/실패·특별 절차)에 맞춰 **문서 작성** → `docs/7`.
-11. **`report/9`** 참조해 **실행 가능하도록** 보고서 **상세 재작성** (명령·22케이스 매핑 등).
-12. 실행을 **가상 환경**에서 하도록 **안내** → README·`report/9`·`docs/7` 반영.
-13. **모든 내용 GitHub에 올려줘** (커밋·`origin`/`magic14` 푸시).
-14. **지금까지 내용을 report와 prompting에 각각 정리** (본 요청).
+10. 첨부 **테스트 양식**에 맞춰 문서 작성 → `docs/7`.
+11. **`report/9`** 참조해 실행 가능하도록 **상세 재작성** (명령·테스트 매핑 등).
+12. 실행을 **가상 환경**에서 하도록 안내 → README·`report/9`·`docs/7`.
+13. **모든 내용 GitHub에 올려줘** (커밋·푸시).
+14. **report와 prompting에 각각 누적 정리** → `report/10`, **본 파일 `004`**.
+15. **GREEN 단계** 브랜치 전략 문의 → `red`에서 **`green`** 분기 권장.
+16. **`red`에서 `green` 브랜치 생성** 요청 → 실행.
+17. **GREEN을 만족하는 코드 구현** → FR-05 **첫 배치 시도 성공** 회귀 테스트 2건(기존 Resolver 그대로 통과), `report/9`·`10` **24 tests** 정합.
+18. **지금까지 작업 commit** → `.gitignore`, `__pycache__`·`egg-info` 추적 제거, `prompting/004` 등 `chore` 커밋.
+19. **GUI로 확인 가능하도록** → `src/magicsquare/gui/` **tkinter**, `magicsquare-gui`, PRD **§2.4**, README·`pyproject` 스크립트.
+20. **GUI 실행 명령어** 안내 (답변-only).
+21. **보고서·Prompting·README 정리·업데이트** (본 요청).
 
 ---
 
@@ -30,13 +37,15 @@
 
 | 요청 축 | 주요 산출 |
 |---------|-----------|
-| PRD·Dual Track·MLOps | `docs/5.PRD_…` |
+| PRD·Dual Track·MLOps·GUI 범위 | `docs/5.PRD_…` |
 | TO-DO 체크리스트 | `docs/6.TODO_…` |
-| 온보딩·venv·TO-DO 순서 | `README.md` |
 | 테스트 명세 양식 | `docs/7` |
-| 실행 가이드·venv·pytest | `report/9` |
-| 문서 세션 요약 | `report/8` |
+| 실행 가이드·venv·pytest·24 매핑 | `report/9` |
 | 누적 인덱스 보고 | `report/10` |
+| 문서 세션 요약 | `report/8` |
+| 온보딩·GUI·venv·TO-DO | `README.md` |
+| 로컬 GUI | `src/magicsquare/gui/`, `[project.scripts] magicsquare-gui` |
+| 저장소 위생 | `.gitignore` |
 | 프롬프트 구간 상세 | `001`~`003` |
 | 누적 타임라인 | **본 파일 `004`** |
 
@@ -44,12 +53,16 @@
 
 ## 에이전트 쪽 메모
 
-- **코드 변경 없음**: 문서 중심 세션 구간에서 `src/`·`tests/` 미수정; 회귀는 `pytest`로 확인.
-- **`NO_SOLUTION`**: PRD §5에서 입력 검증 우선순위와 **구분** — 문서·테스트 설명 전반에 반영.
-- **Git**: `red` 생성·`main` 병합·원격 푸시; 네트워크 타임아웃 시 재시도·`fetch`로 정합성 확인.
+- **`NO_SOLUTION`**: PRD §5에서 입력 검증 우선순위와 **구분**.
+- **GREEN**: 신규 비즈니스 로직 없이 **테스트로 FR-05 첫 시도 분기** 고정(`tq_first_attempt_ok_grid`).
+- **GUI**: `solve_magic_square` 단일 진입; 계약 문구는 Boundary·PRD §5와 동일.
+- **Git**: `green` 브랜치에 GUI·chore·test 커밋 누적; 원격 푸시는 사용자 환경에 따름.
 
 ---
 
 ## 재사용 시
 
-새 세션에서는 **`report/10`** 과 **`prompting/004`** 를 먼저 열어 범위를 맞춘 뒤, 상세는 **`003`(PRD 세션)** · **`report/9`(실행)** 을 분기한다.
+1. **`report/10`** — 산출물·실행 요약.  
+2. **`report/9`** — venv·pytest·부분 실행.  
+3. **`prompting/004`** — 질문 순서·의도.  
+4. **`003`** — PRD 확장 세션만 깊게 볼 때.
