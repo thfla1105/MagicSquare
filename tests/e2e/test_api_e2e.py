@@ -1,6 +1,13 @@
 from magicsquare import solve_magic_square
 
 
+def test_e2e_ok_02_returns_int6_when_first_placement_attempt_succeeds(
+    tq_first_attempt_ok_grid: list[list[int]],
+) -> None:
+    result = solve_magic_square(tq_first_attempt_ok_grid)
+    assert result == [1, 2, 3, 1, 4, 13]
+
+
 def test_e2e_ok_01_returns_int6_for_valid_solvable_grid(tq_01_grid: list[list[int]]) -> None:
     result = solve_magic_square(tq_01_grid)
     assert result == [3, 3, 6, 4, 4, 1]
