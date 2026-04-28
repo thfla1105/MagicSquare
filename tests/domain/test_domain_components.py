@@ -43,6 +43,13 @@ def test_pi01_magic_square_validator_false_when_any_line_breaks() -> None:
     assert not MagicSquareValidator().is_magic_square(broken)
 
 
+def test_d11_resolver_finds_solution_on_first_attempt_when_low_high_order_works(
+    tq_first_attempt_ok_grid: list[list[int]],
+) -> None:
+    result = MagicSquareResolver().resolve(tq_first_attempt_ok_grid)
+    assert result == [1, 2, 3, 1, 4, 13]
+
+
 def test_d11_resolver_tries_two_placements_and_finds_solution_on_second_attempt(
     tq_01_grid: list[list[int]],
 ) -> None:
