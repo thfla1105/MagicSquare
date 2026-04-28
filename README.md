@@ -27,19 +27,59 @@
 
 - Python **3.10+**
 
-## 설치
+## 설치 (가상 환경 권장)
 
-```bash
+프로젝트별로 패키지를 격리하려면 저장소 **루트**에서 가상 환경을 만든 뒤 활성화한다.
+
+### Windows (PowerShell)
+
+```powershell
+Set-Location C:\DEV\MagicSquare
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -U pip
 pip install -e ".[dev]"
 ```
 
-## 테스트
+실행 정책 오류가 나면(일회성):  
+`Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
-```bash
-pytest
+### Windows (cmd)
+
+```bat
+cd C:\DEV\MagicSquare
+python -m venv .venv
+.venv\Scripts\activate.bat
+python -m pip install -U pip
+pip install -e ".[dev]"
 ```
 
-`pyproject.toml`에서 `pythonpath = ["src"]`, `testpaths = ["tests"]` 로 설정되어 있습니다.
+### macOS / Linux (bash 등)
+
+```bash
+cd /path/to/MagicSquare
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -U pip
+pip install -e ".[dev]"
+```
+
+**비활성화**: 터미널에서 `deactivate` (가상 환경이 켜진 상태에서만).
+
+### 가상 환경 없이 (전역 `pip`)
+
+격리가 필요 없으면 루트에서 바로 `pip install -e ".[dev]"` 만 실행해도 된다.
+
+## 테스트
+
+가상 환경을 **활성화한 같은 터미널**에서 저장소 루트에서 실행한다.
+
+```bash
+python -m pytest tests
+```
+
+간단한 요약만 보려면 `python -m pytest tests -q`  
+(프로젝트에 `pytest` 가 들어 있으면 `pytest` 단독 명령도 동일하게 동작한다.)
 
 ## 문서
 
