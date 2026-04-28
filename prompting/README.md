@@ -4,6 +4,7 @@
 
 - `001_initial_request.md`: MagicSquare 4x4 PRD 기준 구현 요청
 - `002_followup_docs_prompting_request.md`: docs 제안사항 및 prompting 정리 요청
+- `003_dual_track_mlops_docs_session.md`: Dual Track·MLOps 관점 PRD 보강, `docs/6` 체크리스트·README TO-DO, 본 세션 프롬프트·산출 요약
 
 목적:
 
