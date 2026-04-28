@@ -7,7 +7,7 @@
 - **Boundary(API 계약)**: 입력 검증(FR-01), 정해진 `code`/`message`(§5), 검증 **우선순위**. 무효 입력에서는 Domain을 호출하지 않습니다.
 - **Domain(순수 로직)**: 빈칸 탐색(FR-02), 누락 수(FR-03), 완성 판정(FR-04), 최대 두 번의 배치 시도(FR-05).
 - **Control**: Boundary 통과 시 Domain을 호출하고, 성공 시 `int[6]`(좌표·값, **1-index**), 실패 시 표준 오류 dict로 매핑합니다.
-- **UI**: 현재 릴리스는 PRD상 **Out of Scope**입니다. API 응답이 **무GUI UX Contract** 역할을 합니다. MLOps는 선택이며, **Ground truth**는 PRD §7.5대로 **FR·결정론적 테스트**로 둡니다.
+- **UI**: PRD **§2.4** — 로컬 **`tkinter`** 데모(`magicsquare.gui`). **웹/서버 UI** 는 Out of Scope(§2.2). 핵심 계약은 여전히 `solve_magic_square` API이다. MLOps는 선택이며, **Ground truth**는 PRD §7.5대로 **FR·결정론적 테스트**로 둔다.
 
 테스트는 **Boundary / Domain / E2E** 로 나누며, 시나리오는 PRD **§8.4**와 맞춥니다.
 
@@ -18,7 +18,7 @@
 | `src/magicsquare/boundary` | 입력 검증·오류 계약 |
 | `src/magicsquare/domain` | 해 탐색·판정 로직 |
 | `src/magicsquare/control` | 유스케이스 조합 |
-| `src/magicsquare/entity` | 격자 등 공유 타입 |
+| `src/magicsquare/gui` | **tkinter** 데스크톱 데모 (격자 입력·풀이) |
 | `tests/boundary`, `tests/domain`, `tests/e2e` | 이중 트랙 + 통합 시나리오 |
 | `docs/` | PRD, 구현 체크리스트 |
 | `report/` | 진행·제안 문서(상세 규칙은 PRD 우선) |
@@ -80,6 +80,24 @@ python -m pytest tests
 
 간단한 요약만 보려면 `python -m pytest tests -q`  
 (프로젝트에 `pytest` 가 들어 있으면 `pytest` 단독 명령도 동일하게 동작한다.)
+
+## GUI (tkinter)
+
+패키지를 설치한 뒤(PRD §2.4):
+
+```bash
+magicsquare-gui
+```
+
+또는 모듈 실행:
+
+```bash
+python -m magicsquare.gui.tk_app
+```
+
+- **풀이**: 현재 격자를 읽어 `solve_magic_square` 호출 — 성공 시 빈 칸 두 곳에 값을 채우고, 오류·`NO_SOLUTION` 은 대화상자·상태줄에 **PRD §5** 문구 그대로 표시.
+- **예시(해 있음/없음)**: E2E·`conftest` 와 동일한 격자를 불러온다.
+- **Windows**: Python 설치 시 **tcl/tk** 포함 여부를 확인한다. (공식 python.org 설치본은 보통 포함.)
 
 ## 문서
 
@@ -161,12 +179,12 @@ python -m pytest tests
 ### 6단계 — 선택
 
 - [ ] **MLOps**(§7.5): 실험·모델 버전 정책 등 — **최종 정답은 FR·골든 테스트**가 정의 (ML이 대체하지 않음)
-- [ ] **UI**(현재 Out of Scope): 별도 프론트 추가 시 PRD §8.4 와 동일 시나리오를 UX 테스트로 복제
+- [ ] **웹 UI**(PRD §2.2): 브라우저 프론트 추가 시 PRD §8.4 와 동일 시나리오를 UX 테스트로 복제
 
 ---
 
 ## 범위 (요약)
 
-**In scope**: 4×4 고정, 값 `0` 또는 `1..16`, 빈칸 정확히 2개, 마방진 합 34, 두 배치 시도 규칙(PRD **FR-05**).
+**In scope**: 4×4 고정, 값 `0` 또는 `1..16`, 빈칸 정확히 2개, 마방진 합 34, 두 배치 시도 규칙(PRD **FR-05**), **로컬 tkinter 데모**(PRD **§2.4**).
 
-**Out of scope**: N×N 일반화, GUI/웹/DB, 임의 퍼즐 생성기(PRD §2.2).
+**Out of scope**: N×N 일반화, **웹·SPA·서버 중심 UI**, DB, 임의 퍼즐 생성기(PRD §2.2).
